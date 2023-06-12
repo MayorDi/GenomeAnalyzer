@@ -7,6 +7,8 @@ namespace GenomeAnalyzer;
 /// </summary>
 public class Gene : ICloneable
 {
+    #region Propertys
+
     /// <summary>
     /// Id is mode of cell.
     /// </summary>
@@ -107,6 +109,8 @@ public class Gene : ICloneable
     /// </summary>
     public SpecificSettings? SpecificSettings { get; set; }
 
+    #endregion
+
     #region Constructor
 
     public Gene() { }
@@ -171,7 +175,7 @@ public class Gene : ICloneable
             Mirror1, Mirror2,
             AdhesinStiffness,
             Color,
-            (SpecificSettings)SpecificSettings.Clone()
+            (SpecificSettings?)SpecificSettings?.Clone()
         );
     }
 

@@ -22,6 +22,11 @@ public class Genome : IEnumerable
         _genes = new Gene[COUNT_GENES];
     }
 
+    public Genome(Gene[] genes)
+    {
+        _genes = genes;
+    }
+
     public GeneEnum GetEnumerator()
     {
         return new GeneEnum(_genes);

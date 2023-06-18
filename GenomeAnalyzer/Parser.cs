@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
+using System.Globalization;
+using System.Net.NetworkInformation;
 
 namespace GenomeAnalyzer;
 
@@ -34,7 +37,7 @@ public class Parser
             }
         }
 
-        arr.RemoveRange(0, 4 );
+        arr.RemoveRange(0, 4);
 
         var bt = new List<byte>();
         for (var i = 0; i < arr.Count; i++)
@@ -46,7 +49,7 @@ public class Parser
 
             if (isVer)
             {
-                _data.Add(bt);
+                _data.Add(new List<byte>(bt));
                 bt.Clear();
 
                 i += 3;
@@ -64,12 +67,12 @@ public class Parser
     /// <returns>A genome created from an array of bytes.</returns>
     public Genome Parsing()
     {
-        Gene[] genes = new Gene[_data.Count];
+        Gene[] genes = new Gene[_data.Count-1];
 
-        for (int i = 0; i < _data.Count; i++)
+        for (int i = 1; i < _data.Count; i++)
         {
             List<byte> bytes = _data[i];
-            
+
             Color color = Color.FromArgb(
                 (int)(BitConverter.ToSingle(new[] { bytes[3], bytes[2], bytes[1], bytes[0] }) * 255.0),
                 (int)(BitConverter.ToSingle(new[] { bytes[7], bytes[6], bytes[5], bytes[4] }) * 255.0),
@@ -101,8 +104,8 @@ public class Parser
 
             float adhS = BitConverter.ToSingle(new[] { bytes[62], bytes[61], bytes[60], bytes[59] });
 
-            Gene gene = new(
-                i,
+            genes[i-1] = new(
+                i-1,
                 cellT,
                 prio,
                 init,
@@ -123,10 +126,8 @@ public class Parser
                 color,
                 null
             );
-
-            genes[i] = gene;
         }
 
-        return new Genome();
+        return new Genome(genes);
     }
 }

@@ -67,7 +67,7 @@ public class Parser
     /// <returns>A genome created from an array of bytes.</returns>
     public Genome Parsing()
     {
-        Gene[] genes = new Gene[_data.Count-1];
+        Gene[] genes = new Gene[_data.Count];
 
         for (int i = 1; i < _data.Count; i++)
         {

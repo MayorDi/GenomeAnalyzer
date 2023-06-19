@@ -54,6 +54,11 @@ public class Parser
 
                 i += 3;
             }
+            else if (i == arr.Count - 1)
+            {
+                _data.Add(new List<byte>(bt));
+                bt.Clear();
+            }
             else
             {
                 bt.Add(arr[i]);
@@ -67,7 +72,7 @@ public class Parser
     /// <returns>A genome created from an array of bytes.</returns>
     public Genome Parsing()
     {
-        Gene[] genes = new Gene[_data.Count];
+        Gene[] genes = new Gene[_data.Count-1];
 
         for (int i = 1; i < _data.Count; i++)
         {
